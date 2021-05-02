@@ -1,33 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Dealership Review</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
-    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Dealership Review</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
+  <script
+    src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
 
 </head>
 
-    <body>
-    <!--Add a nav bar here -->
-    <nav>
+<body>
+  <!--Add a nav bar here -->
+  <nav  class="navbar navbar-light bg-light">
+    <ul  class="navbar-nav"></ul>
+      <li  class="navbar-item" ><a class="nav-link" href="{% url 'djangoapp:about' %}">About</a></li>
+      <li  class="navbar-item"  ><a  class="nav-link" href="{% url 'djangoapp:contact' %}">Contact</a></li>
+    </ul>
+  </nav>
 
-  <ul>
-    
-    <li><a href="{% url 'djangoapp:about' %}">About</a></li>
-    <li><a href="{% url 'djangoapp:contact' %}">Contact</a></li>
-  </ul>
+  <nav  class="navbar navbar-light bg-light">
+    <span  class="navbar-brand">Dealership Review</span>
+    {% if not user.is_authenticated %}
 
+    <form class="form-inline" method="POST" action="{% url 'djangoapp:login' %}" >
+      {% csrf_token %}
+      <input class="form-control" type="text"  name="username"  placeholder="username" aria-label="usernamer">
+      <input class="form-control " type="password" name="password" placeholder="password" aria-label="password">
+      <button class="btn btn-primary" type="submit">Login</button>&nbsp; &nbsp;
+      <a  class="btn btn-info " href="{% url 'djangoapp:registration' %}">Sign up</a>
+    </form>
+    {% else %}
+    <a  class="btn btn-info " href="{% url 'djangoapp:logout' %}">Log out</a>
+    {% endif %}
+  </nav>
 
-    </nav>
-    <h1>Welcom -teszt</h1>
-    <!--Add a dealer table here -->
-
-    </body>
+ 
+  <h1>Welcome - teszt</h1>
+  <!--Add a dealer table here -->
+  <h3>
+    {% if user.is_authenticated %}
+<p>Username: {{user.username}}, First name: {{user.first_name}}, Last name: {{user.last_name}} </p>
+{% endif %}
+  </h3>
+</body>
 
 </html>
