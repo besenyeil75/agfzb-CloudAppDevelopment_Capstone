@@ -1,0 +1,47 @@
+
+
+<form method="POST" 
+
+    Open templates/djangoapp/add_review.html and add a <form> with action pointing to djangoapp:add_review (POST request).
+
+Note that you need to add the dealer id as URL parameter here. For example, action="{% url 'djangoapp:add_review' dealer_id%}". The dealer_id could be sent back within the context or you may call get dealer cloud function to get the dealer object and append it into context.
+
+    Add the following child elements to the <form>:
+        A <textarea class="form-control" id="content" name="content" rows="2" required></textarea> to receive review content.
+        A <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck"> to ask if users purchased car from this dealer before or not.
+        A Bootstrap dropdown <select name="car" id="car" class="form-select" required> to ask user select a car owned by this dealer. (which you created using Django admin site).
+
+    Each select <option> represents a car with make and produce year information. For example:
+
+    <select name="car" id="car" class="form-select" required>
+         {% for car in cars %}
+             <option selected value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
+         {% endfor %}
+    </select>
+
+        A date input <input class="date-own form-control" type="text" name="purchasedate" id="purchasedate"> to ask users pick a purchase date. You may also add the following script to define the purchase date format.
+
+      <script type="text/javascript">
+          $('.date-own').datepicker({
+             format: 'mm/dd/yyyy'
+           });
+     </script>
+
+        A Submit button to post the form data to add_review view.
+
+The completed review form may look like the following screenshot: image
+
+You can find some detailed references about Bootstrap forms near the end of this lab.
+
+Next, you will need to update add_review view to handle both GET and POST request.
+
+    Open djangoapp/views.py, find add_review view method.
+
+    When request.method ==GET, first query the cars with the dealer id to be reviewed. The queried cars will be used in the <select> dropdown. Then append the queried cars into context and call render method to render add_review.html.
+
+    When request.method ==POST, you need to update the json_payload["review"] to use the actual values obtained from the review form.
+        For review time, you may use some Python datetime formatting method such as datetime.utcnow().isoformat() to convert it into ISO format to be consistent with the format in Cloudant.
+        For purchase, you may use car.year.strftime("%Y") to only get the year from the date field.
+
+    Update return statement to redirect user to the dealer details page once the review post is done for example. redirect("djangoapp:dealer_details", dealer_id=dealer_id)
+

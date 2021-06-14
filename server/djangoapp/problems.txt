@@ -1,0 +1,43 @@
+todo
+ - sentiment analysis 
+ - poszt mentese
+ - post from
+
+ - ci/cd
+ - bekuldeni
+
+
+
+
+
+----------
+
+
+problemak
+
+
+- node.js rossz kiement, get_dealers_from_cf atirva
+- 404 500 az function-oknal
+
+
+
+
+- get-reviews from cf  
+   - list of reviews kell!
+
+
+   templates design chceck a kepekkel
+
+   - watson 
+
+   html src="{{MEDIA_URL}}/emoji/positive.png"
+
+ - reviews design
+
+
+
+
+    ------------------------
+    
+
+

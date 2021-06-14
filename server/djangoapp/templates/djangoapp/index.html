@@ -18,14 +18,13 @@
 <body>
   <!--Add a nav bar here -->
   <nav  class="navbar navbar-light bg-light">
-    <ul  class="navbar-nav"></ul>
-      <li  class="navbar-item" ><a class="nav-link" href="{% url 'djangoapp:about' %}">About</a></li>
-      <li  class="navbar-item"  ><a  class="nav-link" href="{% url 'djangoapp:contact' %}">Contact</a></li>
-    </ul>
-  </nav>
-
-  <nav  class="navbar navbar-light bg-light">
     <span  class="navbar-brand">Dealership Review</span>
+
+    
+      <a style="font-weight: bold;" class="nav-item nav-link" href="{% url 'djangoapp:about' %}">About</a>
+      <a style="font-weight: bold;" class="nav-link" href="{% url 'djangoapp:contact' %}">Contact</a>
+
+
     {% if not user.is_authenticated %}
 
     <form class="form-inline" method="POST" action="{% url 'djangoapp:login' %}" >
@@ -36,18 +35,52 @@
       <a  class="btn btn-info " href="{% url 'djangoapp:registration' %}">Sign up</a>
     </form>
     {% else %}
+    <div>
+    <span style='color:maroon;font-weight: bold;margin-right: 20px;'>   {{user.first_name}} {{user.last_name}} - {{user.username}} </span> 
     <a  class="btn btn-info " href="{% url 'djangoapp:logout' %}">Log out</a>
+  </div>
     {% endif %}
   </nav>
-
+<br><br><br>
  
-  <h1>Welcome - teszt</h1>
+  
   <!--Add a dealer table here -->
-  <h3>
-    {% if user.is_authenticated %}
-<p>Username: {{user.username}}, First name: {{user.first_name}}, Last name: {{user.last_name}} </p>
-{% endif %}
-  </h3>
+  
+
+  <table class="table" id="table" data-filter-control="true" >
+    <thead>
+        <tr>
+            <th data-field="id">ID</th>
+            <th data-field="short_name">Dealer Name</th>
+            <th data-field="city">City</th>
+            <th data-field="address">Address</th>
+            <th data-field="zip">Zip</th>
+            <th data-field="st"  data-filter-control="select" >State</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for dealer in dealership_list %}
+            <tr>
+                <td>{{dealer.id}}</td>
+                <td><a href="{% url 'djangoapp:get_dealership_reviews' dealer.id %}">{{dealer.full_name}}</a></td>
+                <td>{{dealer.icityd}}</td>
+                <td>{{dealer.address}}</td>
+                <td>{{dealer.zip}}</td>
+                <td>{{dealer.st}}</td>
+                
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+
 </body>
+<script>
+  $(function() {
+    $('#table').bootstrapTable()
+  })
+</script>
 
 </html>
