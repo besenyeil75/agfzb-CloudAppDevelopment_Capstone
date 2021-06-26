@@ -1,6 +1,58 @@
-<p>
-Adrress: asddsadasdasd<br>
-Phone 5555-555-55
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dealership Review</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
+  <script
+    src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+
+</head>
+
+<body>
+  <!--Add a nav bar here -->
+  <nav  class="navbar navbar-light bg-light">
+    <span  class="navbar-brand">Dealership Review</span>
+
+    
+      <a style="font-weight: bold;" class="nav-item nav-link" href="{% url 'djangoapp:about' %}">About</a>
+      <a style="font-weight: bold;" class="nav-link" href="{% url 'djangoapp:contact' %}">Contact</a>
 
 
-</p>
+    {% if not user.is_authenticated %}
+
+    <form class="form-inline" method="POST" action="{% url 'djangoapp:login' %}" >
+      {% csrf_token %}
+      <input class="form-control" type="text"  name="username"  placeholder="username" aria-label="usernamer">
+      <input class="form-control " type="password" name="password" placeholder="password" aria-label="password">
+      <button class="btn btn-primary" type="submit">Login</button>&nbsp; &nbsp;
+      <a  class="btn btn-info " href="{% url 'djangoapp:registration' %}">Sign up</a>
+    </form>
+    {% else %}
+    <div>
+    <span style='color:maroon;font-weight: bold;margin-right: 20px;'>   {{user.first_name}} {{user.last_name}} - {{user.username}} </span> 
+    <a  class="btn btn-info " href="{% url 'djangoapp:logout' %}">Log out</a>
+  </div>
+    {% endif %}
+  </nav>
+<br><br><br>
+
+
+<div style="margin: 0px  40px;">
+
+    <h3>Contact</h3> 
+    <p>
+        <b>Adrress:</b> Kukutyin, Zabhegyező u. 7 <br>
+            <b>Phone:</b> 5555-555-55
+        
+        
+        </p>
+
+</div>
+
